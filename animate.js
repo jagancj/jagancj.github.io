@@ -168,7 +168,6 @@ function createGUI(model, animations) {
   // 	expressionFolder.add( face.morphTargetInfluences, i, 0, 1, 0.01 ).name( expressions[ i ] );
 
   // }
-  activeAction = actions["Wave"];
   activeAction = actions["Walking"];
   activeAction.play();
 

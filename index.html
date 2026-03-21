@@ -4,418 +4,680 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CJ's Website</title>
+    <title>Jagan CJ | Full-Stack & Mobile Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --dark-bg: rgba(15, 15, 15, 0.95);
-        --spacing: 350px;
-        font-family: "Quicksand", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-      }
-      /* The device with borders */
-      .smartphone {
-        position: relative;
-        width: 220px;
-        height: 400px;
-        margin: auto;
-        border: 16px black solid;
-        border-top-width: 60px;
-        border-bottom-width: 60px;
-        border-radius: 36px;
+        --bg-1: #0a1020;
+        --bg-2: #121f34;
+        --ink: #eaf1ff;
+        --ink-soft: #b2bfd5;
+        --brand: #56d6bf;
+        --brand-2: #f79c63;
+        --card: rgba(15, 26, 43, 0.72);
+        --surface-1: rgba(16, 28, 47, 0.72);
+        --surface-2: rgba(21, 38, 62, 0.7);
+        --card-border: rgba(147, 177, 222, 0.28);
+        --shadow: 0 16px 45px rgba(1, 9, 23, 0.42);
       }
 
-      /* The horizontal line on the top of the device */
-      .smartphone:before {
+      body[data-theme="light"] {
+        --bg-1: #f9f4ea;
+        --bg-2: #e9f4f0;
+        --ink: #1a2433;
+        --ink-soft: #4a576a;
+        --brand: #0f7c6c;
+        --brand-2: #e5672f;
+        --card: rgba(255, 255, 255, 0.76);
+        --surface-1: rgba(255, 255, 255, 0.58);
+        --surface-2: rgba(255, 255, 255, 0.8);
+        --card-border: rgba(255, 255, 255, 0.8);
+        --shadow: 0 16px 45px rgba(29, 41, 67, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Sora", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--brand-2) 30%, transparent) 0%, transparent 34%),
+          radial-gradient(circle at 82% 14%, color-mix(in srgb, var(--brand) 28%, transparent) 0%, transparent 30%),
+          linear-gradient(125deg, var(--bg-1), var(--bg-2));
+        overflow-x: hidden;
+        transition: background 260ms ease, color 260ms ease;
+      }
+
+      body::before {
         content: "";
-        display: block;
-        width: 60px;
-        height: 5px;
-        position: absolute;
-        top: -30px;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #333;
-        border-radius: 10px;
-      }
-
-      /* The circle on the bottom of the device */
-      .smartphone:after {
-        content: "";
-        display: block;
-        width: 35px;
-        height: 35px;
-        position: absolute;
-        left: 50%;
-        bottom: -65px;
-        transform: translate(-50%, -50%);
-        background: #333;
-        border-radius: 50%;
-      }
-
-      main {
-        color: white;
-        z-index: 99;
-        position: absolute;
-        width: 100%;
-        margin: 0px auto;
-        padding: 120px 0px;
-
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-      }
-
-      h1,
-      h2,
-      h3,
-      blockquote {
-        font-family: elevon, sans-serif;
-        font-weight: 700;
-        font-style: normal;
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(color-mix(in srgb, var(--ink) 14%, transparent) 1px, transparent 1px);
+        background-size: 18px 18px;
+        pointer-events: none;
+        z-index: -1;
       }
 
       canvas {
         position: fixed;
-        top: 0;
-        left: 0;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
       }
 
-      header {
-        background: var(--dark-bg);
-        grid-column: 2 / span 5;
-        font-size: 2.5rem;
-        padding: 2rem;
-        margin-bottom: var(--spacing);
-      }
-
-      section {
-        grid-column: 1 / 8;
-        background: var(--dark-bg);
-        font-size: 1.25rem;
-        line-height: 1.5;
-        margin-bottom: var(--spacing);
-      }
-
-      blockquote {
-        margin: 0;
-        padding: 0;
-        grid-column: 2 / span 9;
-        margin-bottom: var(--spacing);
-      }
-
-      blockquote p {
-        color: black;
-        background-color: white;
-        font-size: 4rem;
-        display: inline;
-        line-height: 1;
-      }
-
-      .left {
-        grid-column: 6 / 12;
-      }
-      ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      ul li {
-        border: 1px solid #ddd;
-        margin-top: -1px;
-        background-color: #f6f6f6;
-        padding: 5px;
-        color: black;
-      }
-      .mobile-title {
-        font-size: 18px;
-        text-align: center;
-      }
-      .mobile-sub-title {
-        font-size: 14px;
-        text-align: center;
-      }
-      /* The laptop with borders */
-      .laptop {
-        width: 600px;
-        height: 400px;
-        margin: 56px 0 0 0;
-        border: 12px black solid;
-        border-radius: 2px;
-        grid-column: 6/8;
-      }
-
-      /* The keyboard of the laptop */
-      .laptop:after {
-        content: "";
-        display: block;
-        position: absolute;
-        width: 660px;
-        height: 12px;
-        margin: 15px 0 0 -30px;
-        background: black;
-        border-radius: 2px;
-      }
-
-      /* The top of the keyboard */
-      .laptop:before {
-        content: "";
-        display: block;
-        position: absolute;
-        width: 75px;
-        height: 9px;
-        margin: 400px 0 0 257px;
-        background: white;
-        z-index: 1;
-      }
-      .laptop .content {
-        width: 580px;
-        height: 370px;
-        margin: 0px 0 0 0;
-        padding: 10px;
-        background: #817a7a;
-        overflow: hidden;
-      }
-      .laptop-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-      }
-      .laptop-text-style {
-        font-size: 14px;
-        margin: 0;
-        padding: 2px;
-      }
-      .laptop-grid-content {
-        background: #fbf9f9;
-        padding: 10px;
-        margin: 6px;
-        color: #171414;
-      }
-      img {
-        width: 28px;
-        height: 16px;
-      }
-      .text-span {
-        top: -2px;
+      .shell {
         position: relative;
+        z-index: 2;
+        width: min(1120px, calc(100% - 2.4rem));
+        margin: 0 auto;
+        padding: 1.2rem 0 3.5rem;
       }
-      .about {
-        padding: 10px;
+
+      .topbar {
+        position: sticky;
+        top: 0.8rem;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.65rem 0.95rem;
+        border-radius: 16px;
+        background: var(--surface-1);
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(12px);
+        box-shadow: var(--shadow);
       }
-      .contact {
-        width: 40px;
-        height: 40px;
-        padding: 10px;
+
+      .logo {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
       }
-      a {
+
+      .logo span {
+        color: var(--brand);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+      }
+
+      .theme-toggle {
+        border: 1px solid rgba(20, 46, 72, 0.2);
+        border-radius: 12px;
+        background: var(--surface-2);
+        color: var(--ink);
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .theme-toggle[aria-pressed="false"] {
+        opacity: 0.72;
+      }
+
+      .nav a {
         text-decoration: none;
+        color: var(--ink);
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.25fr 0.95fr;
+        gap: 1.2rem;
+        margin-top: 1.4rem;
+      }
+
+      .card {
+        border: 1px solid var(--card-border);
+        border-radius: 26px;
+        background: var(--card);
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-main {
+        padding: 2.2rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.42rem 0.72rem;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        color: color-mix(in srgb, var(--brand) 80%, #ffffff 20%);
+        font-weight: 700;
+        background: linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--brand) 35%, transparent),
+          color-mix(in srgb, var(--brand-2) 24%, transparent)
+        );
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Space Grotesk", sans-serif;
+        margin: 0;
+        line-height: 1.1;
+      }
+
+      .hero-main h1 {
+        margin-top: 0.9rem;
+        font-size: clamp(2rem, 4.6vw, 3.45rem);
+      }
+
+      .hero-main p {
+        color: var(--ink-soft);
+        font-size: 1.03rem;
+        line-height: 1.7;
+        margin: 1rem 0 0;
+        max-width: 64ch;
+      }
+
+      .cta-row {
+        margin-top: 1.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.7rem 1.05rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .btn-solid {
+        color: #fff;
+        background: linear-gradient(135deg, var(--brand), #1164a2);
+      }
+
+      .btn-outline {
+        color: var(--ink);
+        border: 1px solid rgba(31, 48, 77, 0.22);
+        background: var(--surface-2);
+      }
+
+      .hero-side {
+        padding: 1.4rem;
+        display: grid;
+        gap: 0.8rem;
+        align-content: start;
+      }
+
+      .metric {
+        background: linear-gradient(160deg, color-mix(in srgb, var(--surface-2) 80%, transparent), color-mix(in srgb, var(--card) 85%, transparent));
+        border: 1px solid rgba(31, 56, 84, 0.1);
+        border-radius: 18px;
+        padding: 0.95rem;
+      }
+
+      .metric h3 {
+        font-size: 1.65rem;
+      }
+
+      .metric p {
+        margin: 0.4rem 0 0;
+        color: var(--ink-soft);
+        font-size: 0.86rem;
+      }
+
+      .metric ul {
+        margin: 0.55rem 0 0;
+        padding-left: 1rem;
+      }
+
+      .metric li {
+        color: var(--ink-soft);
+        font-size: 0.84rem;
+        line-height: 1.45;
+        margin-bottom: 0.25rem;
+      }
+
+      .grid {
+        margin-top: 1.2rem;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.05rem;
+      }
+
+      .about {
+        grid-column: span 7;
+        padding: 1.55rem;
+      }
+
+      .skills {
+        grid-column: span 5;
+        padding: 1.55rem;
+      }
+
+      .roles {
+        grid-column: span 8;
+        padding: 1.55rem;
+      }
+
+      .contact {
+        grid-column: span 4;
+        padding: 1.55rem;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+      }
+
+      .muted {
+        color: var(--ink-soft);
+        line-height: 1.7;
+        margin-top: 0.7rem;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin-top: 0.9rem;
+      }
+
+      .chip {
+        padding: 0.42rem 0.68rem;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--ink);
+        border: 1px solid rgba(18, 61, 107, 0.14);
+        background: var(--surface-2);
+      }
+
+      .role-grid {
+        margin-top: 0.95rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+
+      .role {
+        border-radius: 16px;
+        padding: 1rem;
+        background: linear-gradient(170deg, color-mix(in srgb, var(--surface-2) 80%, transparent), color-mix(in srgb, var(--card) 84%, transparent));
+        border: 1px solid rgba(18, 69, 95, 0.12);
+      }
+
+      .role h3 {
+        font-size: 1rem;
+      }
+
+      .role p {
+        margin: 0.55rem 0 0;
+        color: var(--ink-soft);
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .contact-row {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+      }
+
+      .contact-row a {
+        width: 45px;
+        height: 45px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        border: 1px solid rgba(20, 46, 72, 0.18);
+        background: var(--surface-2);
+        transition: transform 200ms ease;
+      }
+
+      .contact-row a:hover {
+        transform: translateY(-3px);
+      }
+
+      .contact-row img {
+        width: 22px;
+        height: 22px;
+      }
+
+      .quote {
+        margin-top: 1.1rem;
+        padding: 1.15rem;
+        border-radius: 16px;
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 28%, transparent), color-mix(in srgb, var(--brand-2) 24%, transparent));
+      }
+
+      footer {
+        margin-top: 1.4rem;
+        padding: 0.5rem;
+        text-align: center;
+        color: #4b5c6f;
+        font-size: 0.83rem;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      .reveal.is-visible {
+        animation: rise 680ms ease forwards;
+      }
+
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .about,
+        .skills,
+        .roles,
+        .contact {
+          grid-column: span 12;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .shell {
+          width: calc(100% - 1.2rem);
+        }
+
+        .topbar {
+          padding: 0.65rem 0.75rem;
+        }
+
+        .nav {
+          gap: 0.6rem;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+        }
+
+        .nav a {
+          font-size: 0.8rem;
+        }
+
+        .hero-main,
+        .hero-side,
+        .about,
+        .skills,
+        .roles,
+        .contact {
+          padding: 1.15rem;
+        }
+
+        .role-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          animation: none;
+        }
+
+        .reveal.is-visible {
+          animation: none;
+        }
+
+        html {
+          scroll-behavior: auto;
+        }
       }
     </style>
   </head>
 
   <body>
-    <main>
-      <header>
-        <p>Hey There</p>
-        <h1><small>I'm,</small> Jagan</h1>
-        <p>👋 Welcome to my website!</p>
-      </header>
-
-      <blockquote>
-        <p>I am a full-stack web developer and Hybrid Mobile app specialist.</p>
-      </blockquote>
-
-      <section>
-        <h2>📜 About Me</h2>
-        <p class="about">
-          Living in Bengaluru, India. I have been working with Wipro since 2011.
-          Have worked with leading companies around the globe to fulfill their
-          Digital Journey.
-        </p>
-        <div>
-          <a href="https://twitter.com/ijagancj" target="_blank">
-            <img src="./icons/twitter.svg" class="contact" alt="Twitter" />
-          </a>
-          <a href="https://www.linkedin.com/in/jaganc/" target="_blank">
-            <img src="./icons/linkedin.svg" class="contact" alt="LinkedIn" />
-          </a>
-          <a href="https://github.com/jagancj/" target="_blank">
-            <img src="./icons/github.svg" class="contact" alt="GitHub" />
-          </a>
-          <a href="mailto:jagancj@outlook.com" target="_blank">
-            <img src="./icons/outlook.svg" class="contact" alt="Email" />
-          </a>
+    <main class="shell">
+      <nav class="topbar">
+        <div class="logo"><span>JC</span> Portfolio</div>
+        <div class="nav">
+          <a href="#about">About</a>
+          <a href="#expertise">Expertise</a>
+          <a href="#contact">Contact</a>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="true" aria-label="Toggle color theme" title="Toggle theme">&#9790;</button>
         </div>
+      </nav>
+
+      <section class="hero">
+        <article class="card hero-main reveal">
+          <span class="badge">Available for product engineering roles</span>
+          <h1>
+            Jagan CJ<br />
+            <span style="color: var(--brand)">Builds modern products across apps, DevOps, and AI agents</span>
+          </h1>
+          <p>
+            Full-stack engineer based in Bengaluru, India. Working with
+            Wipro until July 2022 and currently with Cognizant since July 2022, partnering with global teams
+            to accelerate digital transformation journeys. In addition to web and mobile, I also build DevOps
+            capabilities, AI agents, and GenAI-driven solutions using modern tooling.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-solid" href="mailto:jagancj@outlook.com">Let's Collaborate</a>
+            <a class="btn btn-outline" href="https://www.linkedin.com/in/jaganc/" target="_blank" rel="noreferrer">View LinkedIn</a>
+          </div>
+        </article>
+
+        <aside class="card hero-side reveal" style="animation-delay: 120ms">
+          <div class="metric">
+            <h3>14+ yrs</h3>
+            <p>building software products across enterprise and startup environments</p>
+          </div>
+          <div class="metric">
+            <h3>Apps + Platforms</h3>
+            <p>React, Angular, Vue, React Native, Flutter, Ionic, Node.js, DevOps</p>
+          </div>
+          <div class="metric">
+            <h3>AI + Cloud</h3>
+            <p>AWS Bedrock, Python, S3, CloudFront, DevOps and scalable API-first architecture</p>
+          </div>
+          <div class="metric">
+            <h3>Current Focus</h3>
+            <ul>
+              <li>Agentic workflows and GenAI integrations</li>
+              <li>Cloud-native DevOps and delivery automation</li>
+              <li>Architecture planning with realistic effort estimates</li>
+            </ul>
+          </div>
+        </aside>
       </section>
 
-      <section class="smartphone">
-        <p class="mobile-title">📱 Mobile App Developer</p>
-        <p class="mobile-sub-title">🧑‍💻 Frameworks I work with</p>
-        <ul>
-          <li><img src="./icons/icons8-react-native.svg" alt="React Native" />React Native</li>
-          <li><img src="./icons/icons8-flutter.svg" alt="Flutter" />Flutter</li>
-          <li><img src="./icons/ionic1.svg" alt="Ionic" />Ionic</li>
-        </ul>
-        <p class="mobile-sub-title">🛠️ Tools I use</p>
-        <ul>
-          <li>
-            <img src="./icons/icons8-visual-studio-code-2019.svg" alt="VS Code" />VS Code
-          </li>
-          <li><img src="./icons/icons8-android-studio.svg" alt="Android Studio" />Android Studio</li>
-          <li><img src="./icons/icons8-xcode.svg" alt="XCode" />XCode</li>
-        </ul>
-      </section>
+      <section class="grid">
+        <article id="about" class="card about reveal" style="animation-delay: 160ms">
+          <h2 class="section-title">About</h2>
+          <p class="muted">
+            I focus on blending practical engineering with user-centered thinking. My work spans frontend
+            architecture, backend APIs, and mobile-first product delivery, with close collaboration across design,
+            product, and QA. I also contribute to solution architecture, project effort estimation, and proposal
+            generation for new initiatives.
+          </p>
+          <div class="quote">
+            "Great software should feel reliable, fast, and human from the very first interaction."
+          </div>
+        </article>
 
-      <section class="laptop">
-        <div class="content">
-          <h2>🧑‍💻 Full Stack Developer</h2>
-          <div class="laptop-grid">
-            <div class="laptop-grid-content">
-              <h6 class="laptop-text-style">Languages</h6>
-              <p class="laptop-text-style">
-                <img src="./icons/html5.svg" alt="HTML5" />
-                <span class="text-span">HTML5</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/js.svg" alt="JavaScript" />
-                <span class="text-span">JavaScript</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/css3.svg" alt="CSS3" />
-                <span class="text-span">CSS3</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-dart.svg" alt="Dart" />
-                <span class="text-span">Dart</span>
-              </p>
-            </div>
-            <div class="laptop-grid-content">
-              <h6 class="laptop-text-style">Frontend</h6>
-              <p class="laptop-text-style">
-                <img src="./icons/react.svg" alt="React JS" />
-                <span class="text-span">React JS</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/angular.svg" alt="Angular JS" />
-                <span class="text-span">Angular JS</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-vue-js.svg" alt="Vue JS" />
-                <span class="text-span">Vue JS</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-typescript.svg" alt="TypeScript" />
-                <span class="text-span">TypeScript</span>
-              </p>
-            </div>
-            <div class="laptop-grid-content">
-              <h6 class="laptop-text-style">Backend</h6>
-              <p class="laptop-text-style">
-                <img src="./icons/code.svg" alt="NodeJS" />
-                <span class="text-span">NodeJS</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-mongodb.svg" alt="MongoDB" />
-                <span class="text-span">MongoDB</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/graphql.svg" alt="GraphQL" />
-                <span class="text-span">GraphQL</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/expressjs.svg" alt="ExpressJS" />
-                <span class="text-span">ExpressJS</span>
-              </p>
-            </div>
-            <div class="laptop-grid-content">
-              <h6 class="laptop-text-style">Style</h6>
-              <p class="laptop-text-style">
-                <img src="./icons/bootstrap.svg" alt="Bootstrap" />
-                <span class="text-span">Bootstrap</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-material-ui.svg" alt="Material UI" />
-                <span class="text-span">Material UI</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/tailwind-css.svg" alt="Tailwind CSS" />
-                <span class="text-span">Tailwind</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-sass.svg" alt="SASS" />
-                <span class="text-span">SASS</span>
-              </p>
-            </div>
-            <div class="laptop-grid-content">
-              <h6 class="laptop-text-style">Tools</h6>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-visual-studio-code-2019.svg" alt="VS Code" />
-                <span class="text-span">VS Code</span>
-              </p>
-              <p class="laptop-text-style">
-                <img
-                  src="./icons/intellij.svg"
-                  alt="IntelliJ IDEA"
-                  style="width: 19px; padding: 0px 5px"
-                />
-                <span class="text-span">Intellij IDEA</span>
-              </p>
-            </div>
-            <div class="laptop-grid-content">
-              <h6 class="laptop-text-style">Cloud</h6>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-amazon-web-services.svg" alt="AWS" />
+        <article class="card skills reveal" style="animation-delay: 220ms">
+          <h2 class="section-title">Tech Stack</h2>
+          <div class="chips">
+            <span class="chip">HTML5</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Dart</span>
+            <span class="chip">React</span>
+            <span class="chip">Angular</span>
+            <span class="chip">Vue</span>
+            <span class="chip">Node.js</span>
+            <span class="chip">Express</span>
+            <span class="chip">GraphQL</span>
+            <span class="chip">MongoDB</span>
+            <span class="chip">React Native</span>
+            <span class="chip">Flutter</span>
+            <span class="chip">Ionic</span>
+            <span class="chip">AWS</span>
+            <span class="chip">AWS Bedrock</span>
+            <span class="chip">Amazon S3</span>
+            <span class="chip">CloudFront</span>
+            <span class="chip">Firebase</span>
+            <span class="chip">Python</span>
+            <span class="chip">Agentic AI</span>
+            <span class="chip">DevOps</span>
+            <span class="chip">Solution Architecture</span>
+            <span class="chip">Effort Estimation</span>
+            <span class="chip">Proposal Generation</span>
+            <span class="chip">GitHub Copilot</span>
+            <span class="chip">Cursor</span>
+            <span class="chip">Three.js</span>
+            <span class="chip">Redux</span>
+            <span class="chip">Figma</span>
+          </div>
+        </article>
 
-                <span class="text-span">AWS</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-firebase.svg" alt="Firebase" />
-
-                <span class="text-span">Firebase</span>
-              </p>
+        <article id="expertise" class="card roles reveal" style="animation-delay: 280ms">
+          <h2 class="section-title">Expertise</h2>
+          <div class="role-grid">
+            <div class="role">
+              <h3>Full-Stack Engineering</h3>
+              <p>Designing maintainable frontends and robust service layers with performance and scalability in mind.</p>
             </div>
-            <div class="laptop-grid-content">
-              <h6 class="laptop-text-style">Design</h6>
-              <p class="laptop-text-style">
-                <img src="./icons/figma.svg" alt="Figma" />
-                <span class="text-span">Figma</span>
-              </p>
-              <p class="laptop-text-style">
-                <img
-                  src="./icons/balsamiq.png"
-                  alt="Balsamiq"
-                  style="width: 18px; padding: 0px 5px"
-                />
-                <span class="text-span">Balsamiq</span>
-              </p>
+            <div class="role">
+              <h3>Hybrid Mobile Development</h3>
+              <p>Building cross-platform apps with native-grade experience, reusable code, and reliable release workflows.</p>
             </div>
-            <div class="laptop-grid-content">
-              <h6 class="laptop-text-style">Utils</h6>
-              <p class="laptop-text-style">
-                <img src="./icons/Threejs-logo.svg" alt="Three JS" />
-
-                <span class="text-span">Three JS</span>
-              </p>
-              <p class="laptop-text-style">
-                <img src="./icons/icons8-redux.svg" alt="Redux" />
-                <span class="text-span">Redux</span>
-              </p>
+            <div class="role">
+              <h3>DevOps Engineering</h3>
+              <p>Building automation pipelines, release workflows, and cloud-native operations that improve engineering velocity.</p>
+            </div>
+            <div class="role">
+              <h3>Cloud Integration</h3>
+              <p>Shipping cloud-backed products with AWS services like S3 and CloudFront, secure auth, and dependable CI/CD practices.</p>
+            </div>
+            <div class="role">
+              <h3>Agentic AI Engineering</h3>
+              <p>Designing AI-powered workflows and autonomous agents using Python and AWS Bedrock, with practical GenAI tooling through Copilot and Cursor.</p>
+            </div>
+            <div class="role">
+              <h3>Delivery Leadership</h3>
+              <p>Collaborating across functions to move products from idea to production with measurable outcomes.</p>
+            </div>
+            <div class="role">
+              <h3>Technical Planning and Architecture</h3>
+              <p>Providing solution architecture, project effort estimation, and technical proposal generation to shape feasible, high-impact delivery plans.</p>
             </div>
           </div>
-        </div>
+        </article>
+
+        <article id="contact" class="card contact reveal" style="animation-delay: 340ms">
+          <h2 class="section-title">Connect</h2>
+          <p class="muted">Let's talk about web platforms, mobile products, and modern engineering teams.</p>
+          <div class="contact-row">
+            <a href="https://twitter.com/ijagancj" target="_blank" rel="noreferrer" aria-label="Twitter">
+              <img src="./icons/twitter.svg" alt="Twitter" />
+            </a>
+            <a href="https://www.linkedin.com/in/jaganc/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <img src="./icons/linkedin.svg" alt="LinkedIn" />
+            </a>
+            <a href="https://github.com/jagancj/" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <img src="./icons/github.svg" alt="GitHub" />
+            </a>
+            <a href="mailto:jagancj@outlook.com" aria-label="Email">
+              <img src="./icons/outlook.svg" alt="Email" />
+            </a>
+          </div>
+        </article>
       </section>
 
-      <blockquote style="margin-top: 100px">
-        <p>Thanks for watching!</p>
-      </blockquote>
+      <footer>Thanks for visiting. Crafted with HTML, CSS, and Three.js.</footer>
     </main>
 
     <script type="module" src="/animate.js"></script>
+    <script>
+      const themeStorageKey = "portfolioTheme";
+      const themeToggle = document.getElementById("theme-toggle");
+
+      function getThemePreference() {
+        const savedTheme = localStorage.getItem(themeStorageKey);
+
+        if (savedTheme === "light") {
+          return "light";
+        }
+
+        return "dark";
+      }
+
+      function applyTheme(theme) {
+        document.body.setAttribute("data-theme", theme);
+        const isDark = theme === "dark";
+        themeToggle.setAttribute("aria-pressed", String(isDark));
+        themeToggle.innerHTML = isDark ? "&#9790;" : "&#9728;";
+        themeToggle.setAttribute("title", isDark ? "Switch to light theme" : "Switch to dark theme");
+      }
+
+      applyTheme(getThemePreference());
+
+      themeToggle.addEventListener("click", () => {
+        const currentTheme = document.body.getAttribute("data-theme") || "dark";
+        const nextTheme = currentTheme === "dark" ? "light" : "dark";
+        localStorage.setItem(themeStorageKey, nextTheme);
+        applyTheme(nextTheme);
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+    </script>
   </body>
 </html>

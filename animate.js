@@ -5,6 +5,9 @@ let container, clock, mixer, actions, activeAction, previousAction;
 let camera, scene, renderer, model;
 
 const api = { state: "Walking", emotes: "Wave" };
+let driftTime = 0;
+let animationEnabled = false;
+let modelRequested = false;
 
 init();
 animate();
@@ -19,61 +22,37 @@ function init() {
     0.25,
     100
   );
-  camera.position.set(-5, 3, 10);
+  camera.position.set(-5.5, 2.8, 8.5);
   camera.lookAt(new THREE.Vector3(0, 2, 0));
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xe0e0e0);
-  scene.fog = new THREE.Fog(0xe0e0e0, 20, 100);
+  scene.background = null;
 
   clock = new THREE.Clock();
 
   // lights
 
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
+  const hemiLight = new THREE.HemisphereLight(0xfaf5e8, 0x9db6c0, 0.95);
   hemiLight.position.set(0, 20, 0);
   scene.add(hemiLight);
 
-  const dirLight = new THREE.DirectionalLight(0xffffff);
-  dirLight.position.set(0, 20, 10);
+  const dirLight = new THREE.DirectionalLight(0xfff5de, 0.8);
+  dirLight.position.set(4, 14, 8);
   scene.add(dirLight);
 
-  // ground
+  const fillLight = new THREE.PointLight(0xb5f0e6, 0.65, 40);
+  fillLight.position.set(-6, 4, -3);
+  scene.add(fillLight);
 
-  const mesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(2000, 2000),
-    new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false })
-  );
-  mesh.rotation.x = -Math.PI / 2;
-  scene.add(mesh);
-
-  const grid = new THREE.GridHelper(200, 40, 0x000000, 0x000000);
-  grid.material.opacity = 0.2;
-  grid.material.transparent = true;
-  scene.add(grid);
-
-  // model
-
-  const loader = new GLTFLoader();
-  loader.load(
-    "./RobotExpressive.glb",
-    function (gltf) {
-      model = gltf.scene;
-      scene.add(model);
-
-      createGUI(model, gltf.animations);
-    },
-    undefined,
-    function (e) {
-      console.error(e);
-    }
-  );
-
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);
+
+  animationEnabled = shouldAnimateByDefault();
+  setAnimationEnabled(animationEnabled);
 
   window.addEventListener("resize", onWindowResize);
 
@@ -85,6 +64,53 @@ function init() {
   // msg.voice = voices[0];
   // msg.text = "Hey there, This is CJ.";
   // window.speechSynthesis.speak(msg);
+}
+
+function shouldAnimateByDefault() {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isSmallScreen = window.innerWidth < 900;
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const saveData = connection && connection.saveData === true;
+  const connectionType = connection && typeof connection.effectiveType === "string" ? connection.effectiveType : "";
+  const constrainedNetwork = saveData || connectionType === "slow-2g" || connectionType === "2g" || connectionType === "3g";
+
+  return !reducedMotion && !isSmallScreen && !constrainedNetwork;
+}
+
+function loadModelIfNeeded() {
+  if (modelRequested) {
+    return;
+  }
+
+  modelRequested = true;
+  const loader = new GLTFLoader();
+
+  loader.load(
+    "./RobotExpressive.glb",
+    function (gltf) {
+      model = gltf.scene;
+      model.position.set(2.5, -1.6, -0.8);
+      model.rotation.y = -0.35;
+      model.scale.set(1.45, 1.45, 1.45);
+      scene.add(model);
+
+      createGUI(model, gltf.animations);
+    },
+    undefined,
+    function (e) {
+      console.error(e);
+    }
+  );
+}
+
+function setAnimationEnabled(enabled) {
+  animationEnabled = enabled;
+  container.style.display = enabled ? "block" : "none";
+
+  if (enabled) {
+    loadModelIfNeeded();
+    clock.getDelta();
+  }
 }
 
 function createGUI(model, animations) {
@@ -168,7 +194,7 @@ function createGUI(model, animations) {
   // 	expressionFolder.add( face.morphTargetInfluences, i, 0, 1, 0.01 ).name( expressions[ i ] );
 
   // }
-  activeAction = actions["Walking"];
+  activeAction = actions["Idle"] || actions["Walking"];
   activeAction.play();
 
   //	expressionFolder.open();
@@ -195,16 +221,27 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
+
+  setAnimationEnabled(shouldAnimateByDefault());
 }
 
 //
 
 function animate() {
+  requestAnimationFrame(animate);
+  if (!animationEnabled) {
+    return;
+  }
+
   const dt = clock.getDelta();
+  driftTime += dt;
 
   if (mixer) mixer.update(dt);
 
-  requestAnimationFrame(animate);
+  if (model) {
+    model.position.y = -1.6 + Math.sin(driftTime * 1.1) * 0.06;
+    model.rotation.y = -0.35 + Math.sin(driftTime * 0.45) * 0.08;
+  }
 
   renderer.render(scene, camera);
 
